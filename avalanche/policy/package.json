@@ -1,0 +1,21 @@
+{
+  "name": "nirium-avalanche-policy",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Pre-sign policy gate for x402 exact payments on Avalanche (EVM)",
+  "type": "module",
+  "license": "Apache-2.0",
+  "exports": {
+    ".": "./evm-policy.mjs",
+    "./x402-fetch": "./x402-fetch.mjs",
+    "./rules": "./rules-policy.mjs"
+  },
+  "scripts": { "test": "node --test test/*.test.mjs" },
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "@x402/core": "2.32.0",
+    "@x402/evm": "2.32.0",
+    "@x402/fetch": "2.32.0",
+    "viem": "2.58.7"
+  }
+}
