@@ -6,7 +6,7 @@ checked by anyone with the verifier and a public RPC:
 
 ```bash
 cd avalanche && npm ci && node verify-evm-receipt.mjs ../evidence/2026-11-26/fuji-a2-binding.json
-cd avalanche && npm ci && node verify-evm-receipt.mjs ../evidence/2026-11-26/cchain-a3-binding.json
+cd avalanche && npm ci && node verify-evm-receipt.mjs ../evidence/2026-11-26/cchain-mainnet-binding.json
 ```
 
 ## Payments
@@ -14,7 +14,7 @@ cd avalanche && npm ci && node verify-evm-receipt.mjs ../evidence/2026-11-26/cch
 | Date (UTC) | Network | Transaction | Locator | Amount | Receipt | Verifier |
 |---|---|---|---|---|---|---|
 | 2026-11-26 14:59 | Avalanche Fuji (`eip155:43113`) | [`0x7ca309a4…29f9`](https://testnet.snowtrace.io/tx/0x7ca309a41b019393d2d9e77ec89aff54a2d644b37657b8f2eaa93331cc6429f9) | logIndex 1 (block 61670610) | 0.01 USDC | `2026-11-26/fuji-a2-binding.json` | VALID, payer-signed |
-| 2026-11-26 15:32 | **Avalanche C-Chain mainnet** (`eip155:43114`) | [`0x9b718e42…3f83`](https://snowtrace.io/tx/0x9b718e4249efea418291da2cb4169dcfc344e0b1794d2a2937c7fa08dc4d3f83) | logIndex 12 (block 101457077) | 0.01 USDC | `2026-11-26/cchain-a3-binding.json` | VALID, payer-signed |
+| 2026-11-26 15:32 | **Avalanche C-Chain mainnet** (`eip155:43114`) | [`0x9b718e42…3f83`](https://snowtrace.io/tx/0x9b718e4249efea418291da2cb4169dcfc344e0b1794d2a2937c7fa08dc4d3f83) | logIndex 12 (block 101457077) | 0.01 USDC | `2026-11-26/cchain-mainnet-binding.json` | VALID, payer-signed |
 
 Both were x402 `exact` payments settled by the PayAI facilitator. The C-Chain one was settled by a
 PayAI relayer through Multicall3, so the transaction's `to` is not the USDC contract: the receipt
@@ -35,6 +35,7 @@ The Fuji receipt above was put through the ERC-8004 validation flow on Fuji:
 The on-chain URIs were written before this repo was split out, so they point at the original
 combined repo, `nirium-protocol/nirium-multichain`, pinned to commit `9321ce8`. The files they
 point at are the same bytes as the copies in `evidence/2026-11-26/` here; the request and response
-hashes bind those exact bytes, so either copy can be checked against the chain. The validator is
+hashes bind those exact bytes, so either copy can be checked against the chain. The three
+`fuji-a2-*` / `fuji-agent-card` files keep the names used in those URIs for the same reason. The validator is
 the payTo key, which is also a team key: this shows the ERC-8004 mechanics, not an independent
 third-party validation.

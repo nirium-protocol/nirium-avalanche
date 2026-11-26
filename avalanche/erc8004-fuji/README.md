@@ -92,6 +92,9 @@ key in the environment.
   reverts with "not validator"; with a hash that does not exist, "unknown".
 - Without a key in a live run, or with `--from` without `--dry-run`: the script refuses to run.
 
+Then run live on Fuji the same day: agent 368 registered, a validation request pointing at a
+real payment receipt, and a response of 100 from the validator. See `../../evidence/README.md`.
+
 ## Gotchas
 
 - Fuji's public RPC rejects `eth_getLogs` over more than 100 blocks.

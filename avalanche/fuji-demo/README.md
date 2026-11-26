@@ -1,6 +1,6 @@
 # fuji-demo: x402 payment + Nirium binding on Avalanche
 
-Reference code, 26-nov-2026. Packages pinned: `@x402/express`, `@x402/evm`, `@x402/fetch`, `@x402/core` 2.32.0, `viem` 2.58.7, `express` 5.3.0. No keys are stored here. Nothing in this folder is committed anywhere.
+Reference code, 26-nov-2026. Packages pinned: `@x402/express`, `@x402/evm`, `@x402/fetch`, `@x402/core` 2.32.0, `viem` 2.58.7, `express` 5.3.0. No keys are stored here.
 
 ## Before you start
 
@@ -20,7 +20,7 @@ Reference code, 26-nov-2026. Packages pinned: `@x402/express`, `@x402/evm`, `@x4
 
 `make-binding.mjs` also takes `--tx 0x.. --network eip155:43113` instead of `--settle`, plus `--resource`, `--note`, `--payer`/`--payto` (to narrow a batched tx), `--no-sign` and `--out`.
 
-## C-Chain selftest (A3)
+## C-Chain mainnet selftest
 
 Same steps with `NIRIUM_NETWORK=eip155:43114` on server and client, plus `NIRIUM_ALLOW_MAINNET=1` on the client (without it, the client refuses to pay on mainnet). The asset switches to `0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E`. PayAI charges 0.0059 USD per settlement on mainnet (rate effective 23-nov-2026); Fuji is free. Keep the `selftest` label.
 
