@@ -22,6 +22,21 @@ is bound to the specific `Transfer` log, which is why the locator is a log index
 was also checked against altered copies of itself (amount, log index, receiver, nonce, an edited
 `purpose`, an altered signature): every altered copy failed for the expected reason.
 
+## Pre-sign policy on Fuji
+
+Three runs of `avalanche/policy/demo-pay.mjs` against the same 0.01 USDC resource, through PayAI
+on Fuji. The payer's USDC balance was read on-chain before and after each run.
+
+| Policy | Outcome | Signed | Sent to the seller | Payer balance (atomic USDC) |
+|---|---|---|---|---|
+| max 5000 | DENY ("amount 10000 above limit 5000") | no | no | 19990000 → 19990000 |
+| max 20000, approval above 5000 | WAIT ("needs approval") | no | no | 19990000 → 19990000 |
+| max 10000, payTo allowlisted | ALLOWED, SIGNED | yes | yes: [`0x0fd6edd5…1824`](https://testnet.snowtrace.io/tx/0x0fd6edd584258ebff615040f043262d38aeb0deb72886418a54308c541c51824) | 19990000 → 19980000 |
+
+The ALLOW payment has its own payer-signed receipt, `2026-11-26/fuji-policy-allow-binding.json`
+(logIndex 1), VALID. A refused payment leaves nothing on-chain by design: there is no
+authorization to replay, because none was signed.
+
 ## ERC-8004 on Avalanche Fuji
 
 The Fuji receipt above was put through the ERC-8004 validation flow on Fuji:

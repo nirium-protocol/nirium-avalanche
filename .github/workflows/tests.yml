@@ -22,11 +22,15 @@ jobs:
           (cd avalanche && npm ci --no-audit --no-fund)
           (cd avalanche/fuji-demo && npm ci --no-audit --no-fund)
           (cd avalanche/erc8004-fuji && npm ci --no-audit --no-fund)
+          (cd avalanche/policy && npm ci --no-audit --no-fund)
       - name: Syntax
         run: for f in $(git ls-files "avalanche/*.mjs"); do node --check "$f"; done
       - name: Verifier against a real transaction (10 cases, public RPC)
         working-directory: avalanche
         run: bash run-tests.sh
+      - name: Pre-sign policy (19 tests, no network)
+        working-directory: avalanche/policy
+        run: npm test
       - name: ERC-8004 dry run (simulation only, no key)
         working-directory: avalanche/erc8004-fuji
         run: node register.mjs --dry-run --from 0x1111111111111111111111111111111111111111 --uri ipfs://ci-dry-run
