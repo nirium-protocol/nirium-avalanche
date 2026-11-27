@@ -43,7 +43,7 @@ app. Settlement is done by PayAI, an independent x402 facilitator.
 Check a receipt from the command line:
 
 ```bash
-npx nirium-verify-evm receipt.json
+npx -p nirium-avalanche nirium-verify-evm receipt.json
 ```
 
 Exit code 0 means valid, 1 means a check failed, 2 means bad input.

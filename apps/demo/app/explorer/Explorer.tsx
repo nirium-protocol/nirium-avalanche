@@ -190,7 +190,7 @@ function ResultView({ result, onEdit, rechecking }: { result: Result; onEdit: (e
     <div className="card note">
       <p>{t.notFound}</p>
       <ul className="attempts mono">{result.attempts.map((a) => <li key={a.gateway}>{host(a.gateway)}: {a.status}</li>)}</ul>
-      <pre className="cmd"><code>npx nirium-cli verify {result.cid}</code></pre>
+      <pre className="cmd"><code>curl -sL https://nirium.myfilebase.com/ipfs/{result.cid} -o receipt.json && npx -p nirium-avalanche nirium-verify-evm receipt.json</code></pre>
     </div>
   );
   const v = result.verdict;
