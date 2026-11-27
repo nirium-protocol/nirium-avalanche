@@ -9,12 +9,12 @@ primary_region = "iad"
 
 [env]
   PORT = "8080"
-  # Testnet (Fuji) until the mainnet switch. Mainnet needs three changes together:
-  #   NIRIUM_NETWORK = "eip155:43114"
-  #   NIRIUM_EVM_PAYTO = "0xd488453B43Bc09398548a7EC39337e04669F0F51"   (no setup needed on EVM)
-  #   NIRIUM_MARKET_ALLOW_MAINNET = "1"   (each sale is income for Nirium)
-  NIRIUM_NETWORK = "eip155:43113"
-  NIRIUM_EVM_PAYTO = "0x241d8C05f2a33F8701B933B704d329CC88367007"
+  # Avalanche C-Chain mainnet since 27-nov-2026. Each sale is income for Nirium and settles straight to this
+  # address, created for the market only (separate from the team's self-test wallets).
+  NIRIUM_NETWORK = "eip155:43114"
+  NIRIUM_EVM_PAYTO = "0xd488453B43Bc09398548a7EC39337e04669F0F51"
+  NIRIUM_MARKET_ALLOW_MAINNET = "1"
+  # Back to testnet: NIRIUM_NETWORK = "eip155:43113", the team's test payTo, and remove the line above.
 
 [http_service]
   internal_port = 8080
