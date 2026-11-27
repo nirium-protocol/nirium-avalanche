@@ -1,7 +1,8 @@
 /* Tokens read from nirium.xyz (apps/web/app/globals.css and tailwind.config.ts in
    nirium-core-private): #050505 / #0A0A0A surfaces, #f8f9fa light background, stellar-teal
    #2DEBE8, stellar-yellow #FFC800, pulse-violet #7000ff, 12-16px radii, soft card shadow.
-   Avalanche's accent inside the Nirium brand is a warm red, kept to text and small marks. */
+   Avalanche's accent inside the Nirium brand is the brand's own stellar-blue. A red accent
+   would read as FAIL next to the check results, so it is not used. */
 :root, :root[data-theme="dark"] {
   color-scheme: dark;
   --bg: #050505;
@@ -10,7 +11,7 @@
   --muted: rgba(255, 255, 255, 0.68);
   --line: rgba(255, 255, 255, 0.1);
   --teal: #2debe8;
-  --accent: #ff8f87;        /* warm red, AA on #050505 */
+  --accent: #00aaff;        /* stellar-blue */
   --pass: #4ade80;
   --fail: #ff8a8a;
   --warn: #ffc800;
@@ -24,7 +25,7 @@
   --muted: rgba(24, 24, 27, 0.72);
   --line: rgba(24, 24, 27, 0.1);
   --teal: #005a5a;          /* nirium.xyz light-theme teal */
-  --accent: #b3261e;
+  --accent: #0033aa;        /* nirium.xyz light-theme stellar-blue */
   --pass: #006600;
   --fail: #aa0000;
   --warn: #996600;
