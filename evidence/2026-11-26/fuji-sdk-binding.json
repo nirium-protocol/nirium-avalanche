@@ -1,0 +1,38 @@
+{
+  "version": "nirium-payment-binding-v1",
+  "content_sha256": "4dae7a04a4b1c64de3ec4b7f2ab2e7759aec785ba79d6e802f1f0416204ae4df",
+  "record": {
+    "labels": [
+      "selftest"
+    ],
+    "payment": {
+      "amount": "10000",
+      "asset": "0x5425890298aed601595a70AB815c96711a31Bc65",
+      "decimals": 6,
+      "from": "0x9deC1D6AD171bEb9b0cFd5AfC27895346f49637D",
+      "locator": {
+        "index": 1,
+        "kind": "evm-log"
+      },
+      "network": "eip155:43113",
+      "to": "0x241d8C05f2a33F8701B933B704d329CC88367007",
+      "tx": "0x1f92f2fa0cceaaef49d647227c9ad67a63e397c043c8983dec06c6c77ac60a7f",
+      "x402": {
+        "nonce": "0x6fabbbab0ca9e47337ebad9e17d3581445276327eead9ba134af48b85f24cbb1",
+        "resource": "http://127.0.0.1:34805/data",
+        "scheme": "exact"
+      }
+    },
+    "purpose": {
+      "note": "Nirium SDK selftest: x402Serve + createX402Fetch with policy",
+      "ref": "selftest-2026-11-26-fuji-sdk-02"
+    }
+  },
+  "agent": {
+    "alg": "eip191-secp256k1",
+    "key": "0x9deC1D6AD171bEb9b0cFd5AfC27895346f49637D",
+    "signature": "0x9fcfad4999ca1cabeb51f5b036903b3486fd838121dd2828a7ad78619667352a409e505b261565ae5302c469ae47ca21ae197545c5a28f5c4d49952915f028bd1b",
+    "statement": "nirium-audit-v1:4dae7a04a4b1c64de3ec4b7f2ab2e7759aec785ba79d6e802f1f0416204ae4df"
+  },
+  "network": "eip155:43113"
+}
