@@ -7,7 +7,7 @@ import { createServer } from "node:http";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 import { createX402Fetch, settlementOf } from "nirium-avalanche";
 import { summarize } from "../data.mjs";
-import { createMarketApp } from "../server.mjs";
+import { createMarketApp, networkNote } from "../server.mjs";
 
 const FUJI = "eip155:43113";
 const h = (n) => `0x${BigInt(n).toString(16)}`;
@@ -61,4 +61,21 @@ test("info is free, the data is paid, and a paid query returns the network condi
     assert.equal(settled, 1);
     assert.ok(settlementOf(res));
   } finally { srv.close(); fac.close(); }
+});
+
+test("the bare URL describes the market, and the network note tells the truth on each network", async () => {
+  const app = createMarketApp({ payTo: "0x241d8C05f2a33F8701B933B704d329CC88367007", network: "eip155:43113" });
+  const srv = await new Promise((ok) => { const s = app.listen(0, () => ok(s)); });
+  try {
+    const base = `http://127.0.0.1:${srv.address().port}`;
+    const root = await (await fetch(base + "/")).json();
+    assert.equal(root.routes.paid, "/v1/market");
+    assert.equal(root.routes.info, "/v1/market/info");
+    assert.equal(root.verifyReceipts, "https://avalanche.nirium.xyz");
+    assert.equal(root.note, "Test network: test tokens only.");
+    const info = await (await fetch(base + "/v1/market/info")).json();
+    assert.ok(info.notes.includes("Test network: test tokens only."));
+  } finally { srv.close(); }
+  assert.match(networkNote({ mainnet: true }), /^Mainnet: real USDC/);
+  assert.equal(networkNote({ mainnet: false }), "Test network: test tokens only.");
 });

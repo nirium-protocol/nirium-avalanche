@@ -34,7 +34,7 @@ jobs:
       - name: Library (pay, charge, receipts; 9 tests, one reads the public Fuji RPC)
         working-directory: avalanche
         run: npm run test:sdk
-      - name: x402 market (3 tests, no network)
+      - name: x402 market (4 tests, no network)
         working-directory: avalanche/market
         run: npm test
       - name: Verifier against a real transaction (10 cases, public RPC)
