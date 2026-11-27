@@ -47,3 +47,20 @@ jobs:
           node --input-type=module -e "for (const p of ['nirium-avalanche','nirium-avalanche/policy','nirium-avalanche/policy/x402-fetch','nirium-avalanche/policy/rules','nirium-avalanche/verify']) await import(p); console.log('imports ok')"
           npx --no-install nirium-verify-evm "$GITHUB_WORKSPACE/avalanche/../evidence/2026-11-26/fuji-a2-binding.json" | tail -1 | grep -q "RESULT: VALID"
           if tar -tzf "$RUNNER_TEMP"/nirium-avalanche-*.tgz | grep -E -i "test|example|evidence|fixture|market|demo"; then echo "unexpected files in the package"; exit 1; fi
+
+  market-image:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Build the market image (same Dockerfile Fly uses)
+        run: docker build -f avalanche/market/Dockerfile -t nirium-market .
+      - name: Run it with the testnet config of fly.market.toml; /health must be 200 and the paid route 402
+        run: |
+          docker run -d --name market -p 8080:8080 -e NIRIUM_NETWORK=eip155:43113 -e NIRIUM_EVM_PAYTO=0x241d8C05f2a33F8701B933B704d329CC88367007 nirium-market
+          for i in $(seq 1 30); do curl -sf http://localhost:8080/health && break; sleep 1; done
+          code=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/v1/market)
+          info=$(curl -s http://localhost:8080/v1/market/info)
+          docker logs market | tail -20
+          echo "paid route: $code"; echo "info: $info"
+          test "$code" = 402
