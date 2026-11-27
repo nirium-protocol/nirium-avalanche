@@ -73,3 +73,16 @@ test("what the chain alone shows: the USDC Transfer at its block logIndex, and t
   assert.deepEqual(v.nonces, [{ authorizer: receipt.record.payment.from.toLowerCase(), nonce: receipt.record.payment.x402.nonce.toLowerCase() }]);
   assert.equal(formatUnits(x.value, 6), "0.01");
 });
+
+test("a decision receipt is recognized and checked by hash and payer signature", async () => {
+  const { verifyDecision } = await import("nirium-avalanche/decision");
+  for (const name of ["deny", "wait"]) {
+    const doc = read(`../../../evidence/2026-11-27/fuji-decision-${name}.json`);
+    const c = classify(JSON.stringify(doc));
+    assert.equal(c.kind, "decision");
+    assert.equal((await verifyDecision(doc)).ok, true, name);
+    const edited = structuredClone(doc);
+    edited.record.decision.outcome = "ALLOWED";
+    assert.equal((await verifyDecision(edited)).ok, false, `${name} edited`);
+  }
+});

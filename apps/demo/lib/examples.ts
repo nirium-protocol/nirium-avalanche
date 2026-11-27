@@ -11,6 +11,14 @@ export const STORIES = [
     },
   },
   {
+    cid: "Qmf2KvRL7UbJXaHXTpFbiNPNJJFFwq9q9Mg1xDw6uM9EB9",
+    title: { en: "A sale of the x402 market on mainnet", es: "Una venta del market x402 en mainnet" },
+    text: {
+      en: "A $0.01 query to Nirium's x402 market for Avalanche network data, on C-Chain mainnet, paid by the team. The payer signed this receipt for that exact transfer, and every check runs here.",
+      es: "Una consulta de $0.01 al market x402 de Nirium por datos de la red de Avalanche, en C-Chain mainnet, pagada por el equipo. Quien pagó firmó este recibo para esa transferencia exacta, y aquí corren todas las comprobaciones.",
+    },
+  },
+  {
     cid: "QmNjcqmY3xCnHfpvj8KXj9ZhKFEzyrMmXEQ8jNfBkhpZMz",
     title: { en: "A payment on Fuji", es: "Un pago en Fuji" },
     text: {

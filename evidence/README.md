@@ -96,3 +96,16 @@ on-chain went 0 → 0.01 USDC.
 
 Both are team self-tests: the mainnet sale was paid with team funds and is **not** a customer
 sale or usage. From now on, a sale to this payTo from anyone else is income for Nirium.
+
+## Decision receipts (Avalanche Fuji, 27 Nov 2026)
+
+`2026-11-27/`: fuji-decision-deny.json, fuji-decision-wait.json. The pre-sign policy refused a $0.01 x402 payment twice, once as DENY
+(limit $0.005) and once as WAIT (above $0.005 needs a person). Nothing was signed or sent, so there
+is no transaction; each refusal has a receipt signed by the payer (`nirium-decision-v1`, format in
+`docs/decision-receipt-v1.md`), checked with `verifyDecision` (10 of 10). Team self-test with test
+tokens, not usage.
+
+```bash
+set -a; . <fuji.env>; set +a; node avalanche/sdk/examples/decision-selftest.mjs --ref selftest-2026-11-27-fuji-decision
+```
+

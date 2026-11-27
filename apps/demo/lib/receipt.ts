@@ -8,6 +8,7 @@ import { NETWORKS, HASH_RE, rpcFailureOf, type RpcFailure } from "./chain.ts";
 
 export type Input =
   | { kind: "receipt"; doc: Record<string, any>; network: string }
+  | { kind: "decision"; doc: Record<string, any>; network: string }
   | { kind: "hash"; hash: string }
   | { kind: "cid"; cid: string }
   | { kind: "foreign"; family: "stellar" | "svm" }
@@ -36,6 +37,9 @@ export function classifyDoc(doc: any): Input {
   const network = doc?.record?.payment?.network ?? doc?.network;
   if (typeof network === "string" && network.startsWith("stellar:")) return { kind: "foreign", family: "stellar" };
   if (typeof network === "string" && network.startsWith("solana:")) return { kind: "foreign", family: "svm" };
+  // A decision receipt (what the payer's pre-sign policy decided, refusals included) has no
+  // transfer to bind to: it is checked by its hash and the payer's signature.
+  if (doc?.version === "nirium-decision-v1") return NETWORKS[network] ? { kind: "decision", doc, network } : { kind: "invalid", reason: "unknown-network" };
   if (typeof doc?.record?.payment?.network !== "string") return { kind: "invalid", reason: "not-a-receipt" };
   if (!NETWORKS[network]) return { kind: "invalid", reason: "unknown-network" };
   return { kind: "receipt", doc, network };

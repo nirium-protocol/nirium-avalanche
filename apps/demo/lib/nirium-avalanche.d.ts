@@ -5,3 +5,8 @@ declare module "nirium-avalanche/verify" {
   export function contentSha256(record: unknown): string;
   export const VERSION: string;
 }
+
+declare module "nirium-avalanche/decision" {
+  export const DECISION_VERSION: string;
+  export function verifyDecision(doc: unknown, opts?: { record?: unknown }): Promise<{ ok: boolean; checks: { name: string; ok: boolean; detail?: string }[] }>;
+}

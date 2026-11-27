@@ -1,0 +1,38 @@
+{
+  "version": "nirium-decision-v1",
+  "content_sha256": "2c9ba65dd956fd069f80c778256e6af44f734f3406009eb6385b921c421155d4",
+  "record": {
+    "decision": {
+      "outcome": "WAIT",
+      "policyVersion": "rules-v1",
+      "reason": "amount 10000 needs approval (above 5000)"
+    },
+    "intent": {
+      "amount": "10000",
+      "asset": "0x5425890298aed601595a70AB815c96711a31Bc65",
+      "contextHash": "e11cac0fbb1854c225f855ad2dac85fd693d887127e26833d2add2d8c6c99697",
+      "decimals": 6,
+      "from": "0x9deC1D6AD171bEb9b0cFd5AfC27895346f49637D",
+      "method": "GET",
+      "network": "eip155:43113",
+      "nonce": "0x49cdb640db728dbd83044621a462492e5112f9d9e81e9c046798e0cc2529875e",
+      "payloadHash": "2e861310c33a5c28681eaa5658e10475838c31b6c9f2f9d897489617816912a4",
+      "resource": "http://127.0.0.1:39679/data",
+      "to": "0x241d8C05f2a33F8701B933B704d329CC88367007"
+    },
+    "labels": [
+      "selftest"
+    ],
+    "purpose": {
+      "note": "Held before signing: above $0.005 needs a person's approval",
+      "ref": "selftest-2026-11-27-fuji-decision-wait"
+    }
+  },
+  "agent": {
+    "alg": "eip191-secp256k1",
+    "key": "0x9deC1D6AD171bEb9b0cFd5AfC27895346f49637D",
+    "signature": "0x48198b99084d4334291032777c8f7805e5cabf85888add5243f8bd4c1a66f8b65227a7ee818a0e624b9c2fddb07e92970562de2bdaa053e2dab5c37842f61d241c",
+    "statement": "nirium-audit-v1:2c9ba65dd956fd069f80c778256e6af44f734f3406009eb6385b921c421155d4"
+  },
+  "network": "eip155:43113"
+}
