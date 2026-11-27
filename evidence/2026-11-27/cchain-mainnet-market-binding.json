@@ -1,0 +1,38 @@
+{
+  "version": "nirium-payment-binding-v1",
+  "content_sha256": "8532481f6f202cfda1d62c6c6bf8d03c9ab6e723abb9fc7dbb5f060f6de9d1f3",
+  "record": {
+    "labels": [
+      "selftest"
+    ],
+    "payment": {
+      "amount": "10000",
+      "asset": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+      "decimals": 6,
+      "from": "0xe3b9cEdab108E29081c93E5F5c9754B7949E87a7",
+      "locator": {
+        "index": 1,
+        "kind": "evm-log"
+      },
+      "network": "eip155:43114",
+      "to": "0xd488453B43Bc09398548a7EC39337e04669F0F51",
+      "tx": "0x7b973a140c505e6e28df0dc9bc2c65125645c5d3843172e6423f06941873b632",
+      "x402": {
+        "nonce": "0x782c65d24f8529cac231c3835a90eaf1b8184cf9dab5c18df2ae37c485ce02dc",
+        "resource": "https://nirium-market-avalanche.fly.dev/v1/market",
+        "scheme": "exact"
+      }
+    },
+    "purpose": {
+      "note": "Nirium x402 market query, Avalanche C-Chain mainnet (team self-test)",
+      "ref": "selftest-2026-11-27-cchain-market-mainnet-01"
+    }
+  },
+  "agent": {
+    "alg": "eip191-secp256k1",
+    "key": "0xe3b9cEdab108E29081c93E5F5c9754B7949E87a7",
+    "signature": "0x72db3dfaf24e9720416836fd26b653fa6ed3dcb06cb9e4558bcbdc49d6dc1cb37d8a0d5ac260df65d89801a41ab2bacf9242b841d2c71ad8022000ac8570e1191b",
+    "statement": "nirium-audit-v1:8532481f6f202cfda1d62c6c6bf8d03c9ab6e723abb9fc7dbb5f060f6de9d1f3"
+  },
+  "network": "eip155:43114"
+}

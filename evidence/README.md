@@ -79,3 +79,20 @@ policy (ALLOWED, SIGNED), settled by PayAI, with a payer-signed receipt.
 | 2026-11-27 | Avalanche Fuji | [`0x2777d92e…3cd7`](https://testnet.snowtrace.io/tx/0x2777d92e4f981d5e9132fb6b48fb47eaf7500d778ba6b912569b2e74e5533cd7) | logIndex 1 | 0.01 USDC | `2026-11-26/fuji-market-binding.json` | VALID, payer-signed (18 checks) |
 
 Team self-test with test tokens. The market is Fuji-only; on mainnet each sale would be income.
+
+## x402 market on Fly (testnet, then mainnet)
+
+The market runs on Fly at [`https://nirium-market-avalanche.fly.dev`](https://nirium-market-avalanche.fly.dev/v1/market/info). First a paid query on
+testnet through the public URL, then the config switched to mainnet with a payTo created for the
+market only (`0xd488453B43Bc09398548a7EC39337e04669F0F51`) and one purchase made by the team. The mainnet purchase was made from
+`0xe3b9cEda…87a7` (team self-test wallet) with the **published npm package** (`nirium-avalanche@0.1.0`), under a policy that only
+allowed this payTo and at most 0.01 USDC (ALLOWED, SIGNED). The market's payTo balance read
+on-chain went 0 → 0.01 USDC.
+
+| Date (UTC) | Network | Transaction | Locator | Amount | Receipt | Verifier |
+|---|---|---|---|---|---|---|
+| 2026-11-27 | Avalanche Fuji | [`0xdbdc31…64ce`](https://testnet.snowtrace.io/tx/0xdbdc31cbdb78394739a7f63c087e6c57dc4fad52958b8d692c7ea09173e164ce) | logIndex 1 | 0.01 USDC | `2026-11-27/fuji-market-fly-binding.json` | VALID, payer-signed (18 checks) |
+| 2026-11-27 | **Avalanche C-Chain mainnet** | [`0x7b973a…b632`](https://snowtrace.io/tx/0x7b973a140c505e6e28df0dc9bc2c65125645c5d3843172e6423f06941873b632) | logIndex 1 | 0.01 USDC | `2026-11-27/cchain-mainnet-market-binding.json` | VALID, payer-signed (18 checks) |
+
+Both are team self-tests: the mainnet sale was paid with team funds and is **not** a customer
+sale or usage. From now on, a sale to this payTo from anyone else is income for Nirium.

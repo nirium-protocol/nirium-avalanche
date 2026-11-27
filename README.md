@@ -21,9 +21,9 @@ the same receipt format and the same pre-sign policy contract to Avalanche C-Cha
 | Piece | Fuji | C-Chain mainnet |
 |---|---|---|
 | Receipt verifier (`avalanche/verify-evm-receipt.mjs`) | yes | yes, one team self-test payment |
-| Pre-sign policy (`avalanche/policy/`) | yes, DENY / WAIT / ALLOW runs | not run yet |
-| Pay and charge library (`avalanche/sdk/`) | yes | not run yet |
-| x402 market (`avalanche/market/`) | yes | not yet |
+| Pre-sign policy (`avalanche/policy/`) | yes, DENY / WAIT / ALLOW runs | yes, one team self-test purchase (ALLOWED, SIGNED) |
+| Pay and charge library (`avalanche/sdk/`) | yes | yes, the same purchase, with the published npm package |
+| x402 market (`avalanche/market/`) | yes | live on Fly; one team self-test sale so far |
 | ERC-8004 validation pointing at a receipt (`avalanche/erc8004-fuji/`) | yes | not planned here |
 
 Every payment listed in [`evidence/`](evidence/README.md) was made by the team to test the flow.
