@@ -22,23 +22,28 @@ jobs:
           (cd avalanche && npm ci --no-audit --no-fund)
           (cd avalanche/fuji-demo && npm ci --no-audit --no-fund)
           (cd avalanche/erc8004-fuji && npm ci --no-audit --no-fund)
-          (cd avalanche/policy && npm ci --no-audit --no-fund)
-          (cd avalanche/sdk && npm ci --no-audit --no-fund)
           (cd avalanche/market && npm ci --no-audit --no-fund)
       - name: Syntax
         run: for f in $(git ls-files "avalanche/*.mjs"); do node --check "$f"; done
-      - name: Verifier against a real transaction (10 cases, public RPC)
-        working-directory: avalanche
-        run: bash run-tests.sh
       - name: Pre-sign policy (19 tests, no network)
-        working-directory: avalanche/policy
-        run: npm test
-      - name: SDK (pay, charge, receipts; 9 tests, one reads the public Fuji RPC)
-        working-directory: avalanche/sdk
-        run: npm test
+        working-directory: avalanche
+        run: npm run test:policy
+      - name: Library (pay, charge, receipts; 9 tests, one reads the public Fuji RPC)
+        working-directory: avalanche
+        run: npm run test:sdk
       - name: x402 market (3 tests, no network)
         working-directory: avalanche/market
         run: npm test
-      - name: ERC-8004 dry run (simulation only, no key)
-        working-directory: avalanche/erc8004-fuji
-        run: node register.mjs --dry-run --from 0x1111111111111111111111111111111111111111 --uri ipfs://ci-dry-run
+      - name: Verifier against a real transaction (10 cases, public RPC)
+        working-directory: avalanche
+        run: npm run test:live
+      - name: Package (pack, install in an empty project, import every subpath, run the bin)
+        working-directory: avalanche
+        run: |
+          npm pack --pack-destination "$RUNNER_TEMP"
+          mkdir "$RUNNER_TEMP/consumer" && cd "$RUNNER_TEMP/consumer"
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund "$RUNNER_TEMP"/nirium-avalanche-*.tgz
+          node --input-type=module -e "for (const p of ['nirium-avalanche','nirium-avalanche/policy','nirium-avalanche/policy/x402-fetch','nirium-avalanche/policy/rules','nirium-avalanche/verify']) await import(p); console.log('imports ok')"
+          npx --no-install nirium-verify-evm "$GITHUB_WORKSPACE/avalanche/../evidence/2026-11-26/fuji-a2-binding.json" | tail -1 | grep -q "RESULT: VALID"
+          if tar -tzf "$RUNNER_TEMP"/nirium-avalanche-*.tgz | grep -E -i "test|example|evidence|fixture|market|demo"; then echo "unexpected files in the package"; exit 1; fi

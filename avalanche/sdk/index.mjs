@@ -6,5 +6,5 @@ export { createX402Fetch, settlementOf } from "./pay.mjs";
 export { x402Serve } from "./serve.mjs";
 export { bindReceipt, verifyReceipt } from "./receipt.mjs";
 export { NETWORKS, USDC_EXTRA, PAYAI_FACILITATOR, getNetwork, dollarsToAtomic } from "./networks.mjs";
-export { createRulesPolicy } from "nirium-avalanche-policy/rules";
-export { X402PolicyError } from "nirium-avalanche-policy";
+export { createRulesPolicy } from "../policy/rules-policy.mjs";
+export { X402PolicyError } from "../policy/evm-policy.mjs";

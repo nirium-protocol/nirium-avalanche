@@ -2,6 +2,7 @@
 
 [![tests](https://github.com/nirium-protocol/nirium-avalanche/actions/workflows/tests.yml/badge.svg)](https://github.com/nirium-protocol/nirium-avalanche/actions/workflows/tests.yml)
 [![CodeQL](https://github.com/nirium-protocol/nirium-avalanche/actions/workflows/codeql.yml/badge.svg)](https://github.com/nirium-protocol/nirium-avalanche/actions/workflows/codeql.yml)
+[![npm](https://img.shields.io/npm/v/nirium-avalanche.svg)](https://www.npmjs.com/package/nirium-avalanche)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
 Pay and charge with x402 on Avalanche, refuse a payment before it is signed, and keep a receipt
@@ -44,6 +45,14 @@ They are labeled `selftest` and are not usage. Nothing here has had an external 
 
 ## Quick start
 
+```bash
+npm install nirium-avalanche
+```
+
+One package with the library, the pre-sign policy (`nirium-avalanche/policy`) and the receipt verifier
+(`nirium-avalanche/verify`, and `npx nirium-verify-evm receipt.json` on the command line). Its own README is
+[`avalanche/README.md`](avalanche/README.md).
+
 Check one of the team's receipts against the chain:
 
 ```bash
@@ -58,7 +67,7 @@ transactions.
 Charge for your own API and pay for someone else's (Fuji):
 
 ```js
-import { x402Serve, createX402Fetch, settlementOf, bindReceipt, createRulesPolicy } from "./avalanche/sdk/index.mjs";
+import { x402Serve, createX402Fetch, settlementOf, bindReceipt, createRulesPolicy } from "nirium-avalanche";
 
 app.use(x402Serve({ payTo: "0x...", network: "eip155:43113", routes: { "GET /data": "$0.01" } }));
 
@@ -76,9 +85,9 @@ const receipt = await bindReceipt({ tx: settlementOf(res).transaction, network: 
 | Suite | Command | Network |
 |---|---|---|
 | Verifier, 10 cases against a real transaction | `cd avalanche && npm ci && bash run-tests.sh` | public C-Chain RPC |
-| Pre-sign policy, 19 tests | `cd avalanche/policy && npm ci && npm test` | none |
-| Library, 9 tests | `cd avalanche/sdk && npm ci && npm test` | one test reads the public Fuji RPC |
-| Market, 3 tests | `cd avalanche/market && npm ci && npm test` | none |
+| Pre-sign policy, 19 tests | `cd avalanche && npm ci && npm run test:policy` | none |
+| Library, 9 tests | `cd avalanche && npm ci && npm run test:sdk` | one test reads the public Fuji RPC |
+| Market, 3 tests | `cd avalanche && npm ci && cd market && npm ci && npm test` | none |
 | ERC-8004 dry run | `cd avalanche/erc8004-fuji && npm ci && node register.mjs --dry-run --from 0x... --uri ipfs://x` | public Fuji RPC, simulation only |
 
 CI runs all of them on every pull request. The verifier fixtures point at a third-party payment

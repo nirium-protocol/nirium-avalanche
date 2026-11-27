@@ -15,8 +15,8 @@ outcomes, same `contextHash`.
 
 ```js
 import { privateKeyToAccount } from "viem/accounts";
-import { createPolicyX402Fetch } from "./x402-fetch.mjs";
-import { createRulesPolicy } from "./rules-policy.mjs";
+import { createPolicyX402Fetch } from "nirium-avalanche/policy/x402-fetch";
+import { createRulesPolicy } from "nirium-avalanche/policy/rules";
 
 const pay = createPolicyX402Fetch({
   signer: privateKeyToAccount(process.env.NIRIUM_EVM_PAYER_KEY),
@@ -58,7 +58,7 @@ is sha256 of `{v: 1, url, method, payloadHash}`; an ALLOW must return it unchang
 ## Tests
 
 ```bash
-npm ci && npm test   # 19 tests, no network: typed data comes from the real @x402/evm 2.32.0
+cd .. && npm ci && npm run test:policy   # 19 tests, no network: typed data comes from the real @x402/evm 2.32.0
 ```
 
 The last test runs `@x402/fetch` end to end against a local seller: on DENY the seller never

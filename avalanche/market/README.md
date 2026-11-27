@@ -16,6 +16,7 @@ Network conditions of an Avalanche chain for $0.01 per query, paid with x402.
   unless `NIRIUM_MARKET_ALLOW_MAINNET=1`.
 
 ```bash
+(cd .. && npm ci)   # the market uses the nirium-avalanche package from the folder above
 npm ci
 NIRIUM_EVM_PAYTO=0x... node server.mjs                                   # port 4022
 NIRIUM_EVM_PAYER_KEY=0x... node buy.mjs --payto 0x... --ref order-1      # buys one query, writes a receipt
