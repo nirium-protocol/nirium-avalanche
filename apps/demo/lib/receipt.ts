@@ -42,7 +42,7 @@ export function classifyDoc(doc: any): Input {
 }
 
 /** Where a receipt or transaction of another network can be checked. */
-export const FOREIGN_URL = { stellar: "https://nirium.xyz/verify", svm: "https://solana.nirium.xyz/explorer" } as const;
+export const FOREIGN_URL = { stellar: "https://nirium.xyz/verify", svm: "https://nirium.xyz/solana/explorer" } as const;
 
 export type Verdict =
   | { status: "valid" | "invalid"; checks: Check[] }
