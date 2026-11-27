@@ -8,7 +8,7 @@
 
 import { wrapFetchWithPaymentFromConfig, decodePaymentResponseHeader } from "@x402/fetch";
 import { ExactEvmScheme } from "@x402/evm/exact/client";
-import { createPolicyX402Fetch } from "nirium-avalanche-policy/x402-fetch";
+import { createPolicyX402Fetch } from "../policy/x402-fetch.mjs";
 import { getNetwork } from "./networks.mjs";
 
 /**

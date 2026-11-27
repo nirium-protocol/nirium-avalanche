@@ -36,9 +36,9 @@
 // No keys, no writes: only eth_chainId and eth_getTransactionReceipt.
 // Exit code 0 = every check passed, 1 = at least one failed, 2 = bad input.
 
-import { readFileSync } from "node:fs";
+import { readFileSync, realpathSync } from "node:fs";
 import { createHash } from "node:crypto";
-import { pathToFileURL } from "node:url";
+import { fileURLToPath } from "node:url";
 import {
   createPublicClient, http, decodeEventLog, parseAbi, getAddress,
   isAddressEqual, verifyMessage,
@@ -175,4 +175,7 @@ async function main() {
   process.exit(res.ok ? 0 : 1);
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();
+// Run main() when executed directly, including through the npm bin symlink: compare real paths,
+// or a symlinked call would skip main() and exit 0 without checking anything.
+const invokedPath = (() => { try { return realpathSync(process.argv[1]); } catch { return undefined; } })();
+if (invokedPath && realpathSync(fileURLToPath(import.meta.url)) === invokedPath) main();

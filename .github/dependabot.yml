@@ -9,22 +9,6 @@ updates:
       x402-and-solana-evm:
         patterns: ["@x402/*", "@solana/*", "viem"]
   - package-ecosystem: npm
-    directory: "/avalanche/policy"
-    schedule:
-      interval: weekly
-    open-pull-requests-limit: 5
-    groups:
-      x402-and-solana-evm:
-        patterns: ["@x402/*", "@solana/*", "viem"]
-  - package-ecosystem: npm
-    directory: "/avalanche/sdk"
-    schedule:
-      interval: weekly
-    open-pull-requests-limit: 5
-    groups:
-      x402-and-solana-evm:
-        patterns: ["@x402/*", "@solana/*", "viem"]
-  - package-ecosystem: npm
     directory: "/avalanche/market"
     schedule:
       interval: weekly

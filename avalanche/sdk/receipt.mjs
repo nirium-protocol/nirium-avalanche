@@ -7,7 +7,7 @@
 
 import { createHash } from "node:crypto";
 import { createPublicClient, http, decodeEventLog, parseAbi, isAddressEqual, getAddress } from "viem";
-import { contentSha256, canonicalize, verifyBinding, VERSION, STATEMENT_PREFIX } from "nirium-verify-evm/verify-evm-receipt.mjs";
+import { contentSha256, canonicalize, verifyBinding, VERSION, STATEMENT_PREFIX } from "../verify-evm-receipt.mjs";
 import { getNetwork, USDC_DECIMALS } from "./networks.mjs";
 
 const ABI = parseAbi([

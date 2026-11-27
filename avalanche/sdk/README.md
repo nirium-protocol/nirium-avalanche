@@ -4,7 +4,7 @@ Nirium on Avalanche C-Chain and Fuji: pay and charge with x402, refuse payments 
 signed, and prove what a payment was for.
 
 ```js
-import { x402Serve, createX402Fetch, settlementOf, bindReceipt, verifyReceipt, createRulesPolicy } from "./index.mjs";
+import { x402Serve, createX402Fetch, settlementOf, bindReceipt, verifyReceipt, createRulesPolicy } from "nirium-avalanche";
 
 // Charge for your own API (runs on your server; Nirium runs nothing and receives nothing)
 app.use(x402Serve({ payTo: "0x...", network: "eip155:43113", routes: { "GET /data": "$0.01" } }));
@@ -35,7 +35,7 @@ does not prove delivery. Format: `../../docs/payment-binding-v1.md`.
 ## Tests
 
 ```bash
-npm ci && npm test   # 9 tests
+cd .. && npm ci && npm run test:sdk   # 9 tests
 ```
 
 The pay/charge loop runs offline against a local fake facilitator that checks the payer's
