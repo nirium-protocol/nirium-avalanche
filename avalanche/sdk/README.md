@@ -27,7 +27,7 @@ const { ok } = await verifyReceipt(receipt);
 | `createX402Fetch(cfg)` | `fetch` that pays x402 `exact` with a per-payment cap. With `policy`, nothing is signed without the policy's ALLOW (see `../policy/`). Mainnet needs `allowMainnet: true`. |
 | `settlementOf(res)` | The settlement from the `PAYMENT-RESPONSE` header, or `undefined`. |
 | `bindReceipt(o)` | Reads the settled tx (waits for the RPC to have it), finds the USDC `Transfer` from the payer and its EIP-3009 nonce, builds the receipt in canonical order and signs it as the payer. Refuses a signer that is not the payer. |
-| `verifyReceipt(doc)` | The chain verifier (`../verify-evm-receipt.mjs`). |
+| `verifyReceipt(doc)` | The chain verifier (`../verify-evm-core.mjs`), the same code the CLI and the browser run. |
 
 The receipt adds what the chain does not keep: who declared the payment and what it was for. It
 does not prove delivery. Format: `../../docs/payment-binding-v1.md`.

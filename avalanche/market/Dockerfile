@@ -8,7 +8,7 @@ COPY avalanche/package.json avalanche/package-lock.json ./
 RUN npm ci --ignore-scripts --no-audit --no-fund
 COPY avalanche/sdk ./sdk
 COPY avalanche/policy ./policy
-COPY avalanche/verify-evm-receipt.mjs ./
+COPY avalanche/verify-evm-core.mjs avalanche/verify-evm-receipt.mjs ./
 COPY avalanche/market/package.json avalanche/market/package-lock.json ./market/
 WORKDIR /app/avalanche/market
 RUN npm ci --ignore-scripts --no-audit --no-fund

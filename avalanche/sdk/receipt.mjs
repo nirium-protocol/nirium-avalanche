@@ -5,9 +5,8 @@
 // The receipt adds what the chain does not keep: who declared the payment and what it was for
 // (`purpose`). It does not prove delivery.
 
-import { createHash } from "node:crypto";
 import { createPublicClient, http, decodeEventLog, parseAbi, isAddressEqual, getAddress } from "viem";
-import { contentSha256, canonicalize, verifyBinding, VERSION, STATEMENT_PREFIX } from "../verify-evm-receipt.mjs";
+import { contentSha256, canonicalize, sha256Hex, verifyBinding, VERSION, STATEMENT_PREFIX } from "../verify-evm-core.mjs";
 import { getNetwork, USDC_DECIMALS } from "./networks.mjs";
 
 const ABI = parseAbi([
@@ -78,7 +77,7 @@ export async function bindReceipt(o) {
   });
   const hash = contentSha256(record);
   // Compatible with the Audit Trail verifier: sha256(JSON.stringify(record)) is the same hash.
-  const plain = createHash("sha256").update(JSON.stringify(record), "utf8").digest("hex");
+  const plain = sha256Hex(JSON.stringify(record));
   if (plain !== hash || JSON.stringify(record) !== canonicalize(record)) throw new Error("record is not in canonical order (bug)");
 
   const doc = { version: VERSION, content_sha256: hash, record };

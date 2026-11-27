@@ -34,7 +34,8 @@ They are labeled `selftest` and are not usage. Nothing here has had an external 
 | Path | What it does |
 |---|---|
 | [`docs/payment-binding-v1.md`](docs/payment-binding-v1.md) | The receipt format and what a verifier checks |
-| [`avalanche/verify-evm-receipt.mjs`](avalanche/verify-evm-receipt.mjs) | Checks a receipt against a USDC `Transfer` log (tx hash + block logIndex), the EIP-3009 `AuthorizationUsed` nonce and the payer's signature |
+| [`avalanche/verify-evm-core.mjs`](avalanche/verify-evm-core.mjs) | Checks a receipt against a USDC `Transfer` log (tx hash + block logIndex), the EIP-3009 `AuthorizationUsed` nonce and the payer's signature. The one verifier: the CLI, `verifyReceipt` and the browser run this file |
+| [`avalanche/verify-evm-receipt.mjs`](avalanche/verify-evm-receipt.mjs) | The command line for it (`npx nirium-verify-evm receipt.json`) |
 | [`avalanche/sdk/`](avalanche/sdk/README.md) | The library: `x402Serve` to charge, `createX402Fetch` to pay (with an optional policy), `bindReceipt` and `verifyReceipt` |
 | [`avalanche/policy/`](avalanche/policy/README.md) | Pre-sign policy: DENY, WAIT, a timeout and every malformed answer sign nothing |
 | [`avalanche/market/`](avalanche/market/README.md) | x402 market: Avalanche network conditions (fees, block fill, block time) for $0.01 per query |
@@ -84,6 +85,7 @@ const receipt = await bindReceipt({ tx: settlementOf(res).transaction, network: 
 
 | Suite | Command | Network |
 |---|---|---|
+| Verifier core, 7 tests (hash against `node:crypto`, EIP-191, the full check on recorded RPC answers, altered fields) | `cd avalanche && npm ci && npm run test:verify` | none |
 | Verifier, 10 cases against a real transaction | `cd avalanche && npm ci && bash run-tests.sh` | public C-Chain RPC |
 | Pre-sign policy, 19 tests | `cd avalanche && npm ci && npm run test:policy` | none |
 | Library, 9 tests | `cd avalanche && npm ci && npm run test:sdk` | one test reads the public Fuji RPC |
