@@ -1,10 +1,14 @@
 /* The nirium.xyz look, read from nirium-core-private (apps/web/app/globals.css, tailwind.config.ts and
    app/(app)/verify/page.tsx): #050505 page, #121212 cards with a 2rem radius, black/40 inputs,
    Inter 900 italic uppercase titles with an accent word, 10px uppercase labels with wide tracking,
-   a white primary button, the gold N. Avalanche's accent is the brand's stellar-blue (a red
-   accent would read as FAIL next to the results). Text colors are
+   a white primary button. On this page the N and the accent are Avalanche red, from Ava Labs' own
+   palette (ava-labs/builders-hub: #e84142, #ff394a for text on dark, #c01818 on light). So that red
+   never reads as FAIL, the result panels keep their labels neutral and FAIL keeps its own mark,
+   word and dashed line. Text colors are
    lighter than the site's gray-500 so small text reaches WCAG AA on #121212 and on white. */
 :root, :root[data-theme="dark"] {
+  --chain-line: linear-gradient(90deg, #c01818, #e84142 45%, #ff6b6c);
+  --chain-glow: rgba(232, 65, 66, 0.16);
   color-scheme: dark;
   --bg: #050505;
   --card: #121212;
@@ -14,8 +18,8 @@
   --faint: #8b8b93;          /* 5.5:1 on #121212 */
   --line: rgba(255, 255, 255, 0.06);
   --line-2: rgba(255, 255, 255, 0.12);
-  --accent: #00aaff;         /* stellar-blue: 7.3:1 on #121212 */
-  --accent-soft: rgba(0, 170, 255, 0.1);
+  --accent: #ff394a;         /* Avalanche red for text on dark: 4.97:1 on #121212 */
+  --accent-soft: rgba(255, 57, 74, 0.1);
   --pass: #34d399;
   --pass-soft: rgba(52, 211, 153, 0.1);
   --fail: #f87171;
@@ -28,6 +32,7 @@
   --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
 }
 :root[data-theme="light"] {
+  --chain-glow: rgba(232, 65, 66, 0.08);
   color-scheme: light;
   --bg: #f8f9fa;
   --card: #ffffff;
@@ -37,8 +42,8 @@
   --faint: #63636b;          /* 6.0:1 on white, 5.7:1 on #f8f9fa */
   --line: rgba(24, 24, 27, 0.08);
   --line-2: rgba(24, 24, 27, 0.14);
-  --accent: #0033aa;         /* nirium.xyz light-theme stellar-blue */
-  --accent-soft: rgba(0, 51, 170, 0.08);
+  --accent: #c01818;         /* Avalanche red 700: 6.2:1 on white */
+  --accent-soft: rgba(192, 24, 24, 0.07);
   --pass: #047857;
   --pass-soft: rgba(4, 120, 87, 0.08);
   --fail: #b91c1c;
@@ -68,7 +73,7 @@ a { color: var(--accent); text-underline-offset: 3px; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 /* Status bar: the site's ticker strip, here with facts about this page instead of prices. */
-.status { display: flex; gap: 1.75rem; overflow-x: auto; scrollbar-width: none; padding: 0.45rem clamp(1rem, 4vw, 2.5rem); border-bottom: 1px solid var(--line); background: var(--card); font-family: var(--font-inconsolata), monospace; font-size: 0.75rem; white-space: nowrap; margin: 0; }
+.status { display: flex; gap: 1.75rem; overflow-x: auto; scrollbar-width: none; padding: 0.45rem clamp(1rem, 4vw, 2.5rem); border-bottom: 1px solid var(--line); background: var(--chain-line) top / 100% 3px no-repeat, var(--card); padding-top: calc(0.45rem + 3px); font-family: var(--font-inconsolata), monospace; font-size: 0.75rem; white-space: nowrap; margin: 0; }
 .status::-webkit-scrollbar { display: none; }
 .status div { display: flex; gap: 0.5rem; align-items: center; }
 .status dt { color: var(--faint); text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.68rem; font-weight: 700; }
@@ -90,7 +95,7 @@ a { color: var(--accent); text-underline-offset: 3px; }
 
 .wrap { max-width: 860px; margin: 0 auto; padding: 1.5rem clamp(1rem, 4vw, 2.5rem) 4rem; }
 .wide { max-width: 1100px; }
-.hero { text-align: center; margin: 1.5rem 0 2.5rem; }
+.hero { text-align: center; margin: 1.5rem 0 2.5rem; padding: 1rem 0; background: radial-gradient(ellipse 60% 70% at 50% 45%, var(--chain-glow), transparent 70%); }
 .badge { display: inline-flex; align-items: center; gap: 0.45rem; font-size: 0.7rem; font-weight: 900; letter-spacing: 0.18em; text-transform: uppercase; color: var(--pass); background: var(--pass-soft); border: 1px solid var(--pass-soft); border-radius: 999px; padding: 0.4rem 1rem; margin-bottom: 1.4rem; }
 .display { font-weight: 900; font-style: italic; text-transform: uppercase; letter-spacing: -0.05em; line-height: 0.9; font-size: clamp(2.2rem, 8vw, 4.2rem); margin: 0 0 1.25rem; overflow-wrap: anywhere; }
 .display em { color: var(--accent); font-style: italic; }
@@ -132,7 +137,7 @@ input[aria-invalid="true"] { border-color: var(--fail); }
 .verdict.valid { color: var(--pass); }
 .verdict.invalid { color: var(--fail); }
 .verdict.incomplete { color: var(--warn); }
-.net { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--line-2); border-radius: 999px; padding: 0.05rem 0.55rem; }
+.net { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text); border: 1px solid var(--line-2); border-radius: 999px; padding: 0.05rem 0.55rem; }
 .group { padding: 1.1rem 1.25rem; margin-top: 1rem; }
 .checks { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.4rem; }
 .checks li { display: grid; grid-template-columns: 5.2rem 1fr; gap: 0.1rem 0.75rem; padding: 0.45rem 0; border-top: 1px solid var(--line); }
@@ -196,7 +201,7 @@ a.sr:focus-visible { position: fixed; top: 0.5rem; left: 0.5rem; width: auto; he
 .mech { position: relative; margin: 1.25rem 0 1rem; }
 .mech-heads, .wire-row { display: grid; grid-template-columns: minmax(0, 1fr) clamp(84px, 14vw, 140px) minmax(0, 1fr); align-items: center; }
 .mech-heads p { margin: 0; padding: 1.1rem 1.25rem 0.4rem; }
-.mech-heads .label { margin: 0 0 0.2rem; color: var(--accent); }
+.mech-heads .label { margin: 0 0 0.2rem; color: var(--text); }
 .mech-sub { display: block; font-size: 0.78rem; color: var(--muted); }
 .wires { list-style: none; margin: 0; padding: 0 0 0.75rem; }
 /* The two cards behind the columns. */
