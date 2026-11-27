@@ -19,6 +19,22 @@ export const STORIES = [
     },
   },
   {
+    cid: "QmT8gHuXWpgrXtZLoWZBmpQk4jYACmHHBBvziP2KWZcuc9",
+    title: { en: "A payment that never happened", es: "Un pago que nunca ocurrió" },
+    text: {
+      en: "The payer's policy refused a $0.01 payment on Fuji before signing it: above its $0.005 limit. Nothing reached the chain; this receipt, signed by the payer, is the record of the attempt.",
+      es: "La política de quien paga rechazó un pago de $0.01 en Fuji antes de firmarlo: pasaba su límite de $0.005. Nada llegó a la cadena; este recibo, firmado por quien paga, es el registro del intento.",
+    },
+  },
+  {
+    cid: "QmNenLMRdbuAZGEVrnPE4xVm5uqp1kjgUDKDV4qhSwcaTD",
+    title: { en: "A payment held for a person", es: "Un pago retenido para que lo apruebe una persona" },
+    text: {
+      en: "The same $0.01 on Fuji, held before signing because anything above $0.005 needs a person's approval. Nothing was signed while it waited.",
+      es: "Los mismos $0.01 en Fuji, retenidos antes de firmar porque todo lo que pase de $0.005 necesita que lo apruebe una persona. Mientras esperaba no se firmó nada.",
+    },
+  },
+  {
     cid: "QmNjcqmY3xCnHfpvj8KXj9ZhKFEzyrMmXEQ8jNfBkhpZMz",
     title: { en: "A payment on Fuji", es: "Un pago en Fuji" },
     text: {
