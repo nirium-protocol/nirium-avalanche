@@ -69,3 +69,13 @@ A first run the same night settled `0xb66f1deb…1ea9` but the receipt step read
 before it had the transaction. `bindReceipt` now waits for the receipt (bounded); the run above is
 after that fix. The earlier payment has no receipt here.
 
+## x402 market
+
+One paid query to the Avalanche market (`avalanche/market`) on Fuji, bought with the SDK under a
+policy (ALLOWED, SIGNED), settled by PayAI, with a payer-signed receipt.
+
+| Date (UTC) | Network | Transaction | Locator | Amount | Receipt | Verifier |
+|---|---|---|---|---|---|---|
+| 2026-11-27 | Avalanche Fuji | [`0x2777d92e…3cd7`](https://testnet.snowtrace.io/tx/0x2777d92e4f981d5e9132fb6b48fb47eaf7500d778ba6b912569b2e74e5533cd7) | logIndex 1 | 0.01 USDC | `2026-11-26/fuji-market-binding.json` | VALID, payer-signed (18 checks) |
+
+Team self-test with test tokens. The market is Fuji-only; on mainnet each sale would be income.
