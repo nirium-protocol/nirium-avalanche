@@ -2,8 +2,8 @@
 // paid with x402 through an independent facilitator (PayAI). The buyer pays Nirium's payTo
 // directly; the market stores nothing about buyers (no addresses, no logs of who paid).
 //
-// Test networks only for now (Fuji). On mainnet every sale would be income for Nirium: that is a
-// separate decision, so the server refuses mainnet unless NIRIUM_MARKET_ALLOW_MAINNET=1.
+// Runs on mainnet since 27-nov-2026, where every sale is income for Nirium, so the server still
+// refuses mainnet unless NIRIUM_MARKET_ALLOW_MAINNET=1 is set on purpose (fly.market.toml does).
 //
 //   NIRIUM_EVM_PAYTO=0x... node server.mjs        # PORT (4022), NIRIUM_NETWORK, FACILITATOR_URL, DATA_RPC_URL
 
@@ -14,6 +14,13 @@ import { readMarket, FEE_PRESSURE_RULE } from "./data.mjs";
 
 const PUBLIC_RPC = { "eip155:43113": "https://api.avax-test.network/ext/bc/C/rpc", "eip155:43114": "https://api.avax.network/ext/bc/C/rpc" };
 
+/** What a buyer should know about the network the market runs on. */
+export function networkNote(net) {
+  return net.mainnet
+    ? "Mainnet: real USDC. Each sale is income for Nirium and settles straight to the payTo above."
+    : "Test network: test tokens only.";
+}
+
 export function createMarketApp({ payTo, network = "eip155:43113", price = "$0.01", facilitatorUrl, dataRpcUrl, allowMainnet = false, read = readMarket }) {
   const net = getNetwork(network);
   if (net.mainnet && !allowMainnet) throw new Error("market: refusing mainnet (every sale would be income); set allowMainnet explicitly");
@@ -21,13 +28,23 @@ export function createMarketApp({ payTo, network = "eip155:43113", price = "$0.0
   const app = express();
   app.disable("x-powered-by");
   app.get("/health", (req, res) => res.json({ ok: true }));
+  // The bare URL used to answer "Cannot GET /". It now says what this is and where to go.
+  app.get("/", (req, res) => res.json({
+    service: "Nirium x402 market (Avalanche)",
+    what: "Network conditions of this chain, sold per query with x402.",
+    network, price, payTo,
+    routes: { paid: "/v1/market", info: "/v1/market/info", health: "/health" },
+    verifyReceipts: "https://avalanche.nirium.xyz",
+    source: "https://github.com/nirium-protocol/nirium-avalanche/tree/main/avalanche/market",
+    note: networkNote(net),
+  }));
   app.get("/v1/market/info", (req, res) => res.json({
     what: "Network conditions of this Avalanche chain: base fee and its trend, priority fees, gas price, block fill, block time.",
     network, price, payTo, paidWith: "x402 exact, USDC, settled by an independent facilitator",
     facilitator: facilitatorUrl || PAYAI_FACILITATOR,
     source: "the chain's public RPC, read at request time",
     feePressureRule: FEE_PRESSURE_RULE.description,
-    notes: ["Network data only. No token prices and no recommendation to transact.", "Nothing about the buyer is stored.", "Test network: test tokens only."],
+    notes: ["Network data only. No token prices and no recommendation to transact.", "Nothing about the buyer is stored.", networkNote(net)],
   }));
   app.use(x402Serve({ payTo, network, facilitatorUrl, routes: { "GET /v1/market": { price, description: "Avalanche network conditions" } } }));
   app.get("/v1/market", async (req, res) => {

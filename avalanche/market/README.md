@@ -22,7 +22,7 @@ Network conditions of an Avalanche chain for $0.01 per query, paid with x402.
 npm ci
 NIRIUM_EVM_PAYTO=0x... node server.mjs                                   # port 4022
 NIRIUM_EVM_PAYER_KEY=0x... node buy.mjs --payto 0x... --ref order-1      # buys one query, writes a receipt
-npm test                                                                 # 3 tests, offline
+npm test                                                                 # 4 tests, offline
 ```
 
 `buy.mjs` uses the SDK with a policy, so the buyer only signs what the policy allows, and it
