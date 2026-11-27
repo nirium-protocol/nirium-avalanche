@@ -32,7 +32,7 @@
     "./package.json": "./package.json"
   },
   "bin": {
-    "nirium-verify-evm": "./verify-evm-receipt.mjs"
+    "nirium-verify-evm": "verify-evm-receipt.mjs"
   },
   "files": [
     "sdk/*.mjs",
