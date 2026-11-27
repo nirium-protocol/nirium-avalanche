@@ -54,3 +54,18 @@ hashes bind those exact bytes, so either copy can be checked against the chain. 
 `fuji-a2-*` / `fuji-agent-card` files keep the names used in those URIs for the same reason. The validator is
 the payTo key, which is also a team key: this shows the ERC-8004 mechanics, not an independent
 third-party validation.
+
+## SDK on Fuji
+
+`avalanche/sdk/examples/selftest.mjs` in one run: a seller charging with `x402Serve`, a buyer
+paying with `createX402Fetch` under a rules policy (ALLOWED, SIGNED), PayAI settling, and a
+payer-signed receipt from `bindReceipt` checked with `verifyReceipt`.
+
+| Date (UTC) | Network | Transaction | Locator | Amount | Receipt | Verifier |
+|---|---|---|---|---|---|---|
+| 2026-11-27 | Avalanche Fuji (`eip155:43113`) | [`0x1f92f2fa…0a7f`](https://testnet.snowtrace.io/tx/0x1f92f2fa0cceaaef49d647227c9ad67a63e397c043c8983dec06c6c77ac60a7f) | logIndex 1 | 0.01 USDC | `2026-11-26/fuji-sdk-binding.json` | VALID, payer-signed (18 checks) |
+
+A first run the same night settled `0xb66f1deb…1ea9` but the receipt step read the public RPC
+before it had the transaction. `bindReceipt` now waits for the receipt (bounded); the run above is
+after that fix. The earlier payment has no receipt here.
+

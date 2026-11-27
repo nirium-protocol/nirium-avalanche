@@ -16,6 +16,7 @@ Status: work in progress, Fuji first. Nothing here has had an external audit.
 |---|---|
 | `docs/payment-binding-v1.md` | The receipt format |
 | `avalanche/verify-evm-receipt.mjs` | Checks a receipt against a USDC `Transfer` log (tx hash + logIndex) and the EIP-3009 `AuthorizationUsed` nonce |
+| `avalanche/sdk/` | The library: `x402Serve` to charge, `createX402Fetch` to pay (optional policy), `bindReceipt` and `verifyReceipt` for payer-signed receipts |
 | `avalanche/policy/` | Pre-sign policy: a payment your policy refuses is never signed (DENY, WAIT, timeout and every malformed answer sign nothing) |
 | `avalanche/fuji-demo/` | x402 `exact` payment on Avalanche with PayAI as facilitator, then writes and signs the receipt |
 | `avalanche/erc8004-fuji/` | Points an ERC-8004 validation request at a receipt (Fuji) |
