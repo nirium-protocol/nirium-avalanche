@@ -14,8 +14,7 @@
 // Not a security boundary against code in the same process: whoever holds the base signer
 // can still call it directly.
 
-import { createHash } from "node:crypto";
-import { getAddress, hashTypedData, isAddress } from "viem";
+import { getAddress, hashTypedData, isAddress, sha256, stringToBytes } from "viem";
 
 const DEFAULT_TIMEOUT_MS = 5000;
 const HEX32 = /^0x[0-9a-fA-F]{64}$/;
@@ -77,7 +76,7 @@ export class X402PolicyError extends Error {
   }
 }
 
-const sha256hex = (s) => createHash("sha256").update(s, "utf8").digest("hex");
+const sha256hex = (s) => sha256(stringToBytes(s)).slice(2);
 const nonempty = (v) => typeof v === "string" && v.trim().length > 0;
 
 /** Validates a policy hook when it is configured, so bad config fails before any payment. */

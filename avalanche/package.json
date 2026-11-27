@@ -1,6 +1,6 @@
 {
   "name": "nirium-avalanche",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Pay and charge with x402 on Avalanche, refuse a payment before it is signed, and keep a payer-signed receipt bound to the exact USDC transfer",
   "type": "module",
   "license": "Apache-2.0",
@@ -28,7 +28,8 @@
     "./policy": "./policy/evm-policy.mjs",
     "./policy/x402-fetch": "./policy/x402-fetch.mjs",
     "./policy/rules": "./policy/rules-policy.mjs",
-    "./verify": "./verify-evm-receipt.mjs",
+    "./receipt": "./sdk/receipt.mjs",
+    "./verify": "./verify-evm-core.mjs",
     "./package.json": "./package.json"
   },
   "bin": {
@@ -39,10 +40,12 @@
     "policy/evm-policy.mjs",
     "policy/x402-fetch.mjs",
     "policy/rules-policy.mjs",
+    "verify-evm-core.mjs",
     "verify-evm-receipt.mjs"
   ],
   "scripts": {
-    "test": "node --test policy/test/*.test.mjs sdk/test/*.test.mjs",
+    "test": "node --test test/*.test.mjs policy/test/*.test.mjs sdk/test/*.test.mjs",
+    "test:verify": "node --test test/*.test.mjs",
     "test:policy": "node --test policy/test/*.test.mjs",
     "test:sdk": "node --test sdk/test/*.test.mjs",
     "test:live": "bash run-tests.sh"

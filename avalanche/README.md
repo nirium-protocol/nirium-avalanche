@@ -36,7 +36,8 @@ app. Settlement is done by PayAI, an independent x402 facilitator.
 | `nirium-avalanche` | `x402Serve`, `createX402Fetch`, `settlementOf`, `bindReceipt`, `verifyReceipt`, `createRulesPolicy` |
 | `nirium-avalanche/policy` | The pre-sign policy gate (decodes what is about to be signed, asks your policy, signs only on a bound ALLOW) |
 | `nirium-avalanche/policy/rules` | A small reference policy engine: max amount, approval line, allowlists |
-| `nirium-avalanche/verify` | The receipt verifier as a library |
+| `nirium-avalanche/receipt` | `bindReceipt` and `verifyReceipt` on their own, without the Express middleware |
+| `nirium-avalanche/verify` | The receipt verifier as a library. No Node-only code, so it runs in Node and in the browser |
 
 Check a receipt from the command line:
 
