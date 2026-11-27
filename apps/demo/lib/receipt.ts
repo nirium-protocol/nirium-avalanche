@@ -3,28 +3,46 @@
 // the RPC calls the verifier makes to the receipt's own network.
 
 import { verifyBinding, type Check } from "nirium-avalanche/verify";
+import { extractCid } from "./ipfs.ts";
 import { NETWORKS, HASH_RE, rpcFailureOf, type RpcFailure } from "./chain.ts";
 
 export type Input =
   | { kind: "receipt"; doc: Record<string, any>; network: string }
   | { kind: "hash"; hash: string }
+  | { kind: "cid"; cid: string }
+  | { kind: "foreign"; family: "stellar" | "svm" }
   | { kind: "invalid"; reason: "not-json" | "not-a-receipt" | "unknown-network" | "unrecognized" };
 
-/** Decides what was pasted. The network comes from the receipt itself, never from the page. */
+/** Decides what was pasted: a CID (or gateway URL), a transaction hash, or a receipt. The network
+ *  comes from the receipt itself, never from the page. */
 export function classify(text: string): Input {
   const t = text.trim();
   if (!t) return { kind: "invalid", reason: "unrecognized" };
   if (t.startsWith("{")) {
     let doc: any;
     try { doc = JSON.parse(t); } catch { return { kind: "invalid", reason: "not-json" }; }
-    const network = doc?.record?.payment?.network;
-    if (typeof network !== "string") return { kind: "invalid", reason: "not-a-receipt" };
-    if (!NETWORKS[network]) return { kind: "invalid", reason: "unknown-network" };
-    return { kind: "receipt", doc, network };
+    return classifyDoc(doc);
   }
+  const cid = extractCid(t);
+  if (cid) return { kind: "cid", cid };
   if (HASH_RE.test(t)) return { kind: "hash", hash: t.toLowerCase() };
+  // A base58 Solana transaction signature.
+  if (/^[1-9A-HJ-NP-Za-km-z]{64,90}$/.test(t)) return { kind: "foreign", family: "svm" };
   return { kind: "invalid", reason: "unrecognized" };
 }
+
+/** A parsed document: a receipt for this page's networks, one for another network, or neither. */
+export function classifyDoc(doc: any): Input {
+  const network = doc?.record?.payment?.network ?? doc?.network;
+  if (typeof network === "string" && network.startsWith("stellar:")) return { kind: "foreign", family: "stellar" };
+  if (typeof network === "string" && network.startsWith("solana:")) return { kind: "foreign", family: "svm" };
+  if (typeof doc?.record?.payment?.network !== "string") return { kind: "invalid", reason: "not-a-receipt" };
+  if (!NETWORKS[network]) return { kind: "invalid", reason: "unknown-network" };
+  return { kind: "receipt", doc, network };
+}
+
+/** Where a receipt or transaction of another network can be checked. */
+export const FOREIGN_URL = { stellar: "https://nirium.xyz/verify", svm: "https://solana.nirium.xyz/explorer" } as const;
 
 export type Verdict =
   | { status: "valid" | "invalid"; checks: Check[] }
