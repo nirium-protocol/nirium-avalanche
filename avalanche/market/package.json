@@ -1,0 +1,20 @@
+{
+  "name": "nirium-avalanche-market",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Nirium x402 market for Avalanche: network conditions for $0.01 per query",
+  "type": "module",
+  "license": "Apache-2.0",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test test/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "express": "5.3.0",
+    "viem": "2.58.7",
+    "nirium-avalanche": "file:../sdk"
+  }
+}

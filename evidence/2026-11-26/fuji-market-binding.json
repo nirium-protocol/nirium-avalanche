@@ -1,0 +1,38 @@
+{
+  "version": "nirium-payment-binding-v1",
+  "content_sha256": "5b28127cd17c1045b565721acc3539c202cb923fff03f18703f5c09bd9eab5a5",
+  "record": {
+    "labels": [
+      "selftest"
+    ],
+    "payment": {
+      "amount": "10000",
+      "asset": "0x5425890298aed601595a70AB815c96711a31Bc65",
+      "decimals": 6,
+      "from": "0x9deC1D6AD171bEb9b0cFd5AfC27895346f49637D",
+      "locator": {
+        "index": 1,
+        "kind": "evm-log"
+      },
+      "network": "eip155:43113",
+      "to": "0x241d8C05f2a33F8701B933B704d329CC88367007",
+      "tx": "0x2777d92e4f981d5e9132fb6b48fb47eaf7500d778ba6b912569b2e74e5533cd7",
+      "x402": {
+        "nonce": "0x0850a2e5e607d49ec8cf98f1509c6976ce35e8f1391db7d0f11d999f8454905d",
+        "resource": "http://localhost:4022/v1/market",
+        "scheme": "exact"
+      }
+    },
+    "purpose": {
+      "note": "Nirium x402 market query (Avalanche network conditions)",
+      "ref": "selftest-2026-11-26-fuji-market-01"
+    }
+  },
+  "agent": {
+    "alg": "eip191-secp256k1",
+    "key": "0x9deC1D6AD171bEb9b0cFd5AfC27895346f49637D",
+    "signature": "0xb21a82157b4a2ac1299decf2021cd86c75ba6c60ec9a5f1c7cd9af43316f3e9146599d75ec940bdd46997583074464f5844b1e64cf13abeb13f611646dfa538c1c",
+    "statement": "nirium-audit-v1:5b28127cd17c1045b565721acc3539c202cb923fff03f18703f5c09bd9eab5a5"
+  },
+  "network": "eip155:43113"
+}

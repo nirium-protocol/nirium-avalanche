@@ -24,6 +24,7 @@ jobs:
           (cd avalanche/erc8004-fuji && npm ci --no-audit --no-fund)
           (cd avalanche/policy && npm ci --no-audit --no-fund)
           (cd avalanche/sdk && npm ci --no-audit --no-fund)
+          (cd avalanche/market && npm ci --no-audit --no-fund)
       - name: Syntax
         run: for f in $(git ls-files "avalanche/*.mjs"); do node --check "$f"; done
       - name: Verifier against a real transaction (10 cases, public RPC)
@@ -34,6 +35,9 @@ jobs:
         run: npm test
       - name: SDK (pay, charge, receipts; 8 tests, one reads the public Fuji RPC)
         working-directory: avalanche/sdk
+        run: npm test
+      - name: x402 market (3 tests, no network)
+        working-directory: avalanche/market
         run: npm test
       - name: ERC-8004 dry run (simulation only, no key)
         working-directory: avalanche/erc8004-fuji
