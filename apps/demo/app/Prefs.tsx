@@ -26,7 +26,7 @@ export function Prefs({ children }: { children: React.ReactNode }) {
   const facts: [string, string][] = [
     [t.status.checks, t.status.checksValue],
     [t.status.stored, t.status.storedValue],
-    [t.status.networks, "Fuji · C-Chain"],
+    [t.status.networks, "Fuji · C-Chain mainnet"],
     [t.status.library, `nirium-avalanche ${pkg.version}`],
   ];
   return (
