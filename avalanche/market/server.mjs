@@ -11,6 +11,7 @@ import express from "express";
 import { pathToFileURL } from "node:url";
 import { x402Serve, getNetwork, PAYAI_FACILITATOR } from "nirium-avalanche";
 import { readMarket, FEE_PRESSURE_RULE } from "./data.mjs";
+import { blockTierA } from "./geo.mjs";
 
 const PUBLIC_RPC = { "eip155:43113": "https://api.avax-test.network/ext/bc/C/rpc", "eip155:43114": "https://api.avax.network/ext/bc/C/rpc" };
 
@@ -27,6 +28,9 @@ export function createMarketApp({ payTo, network = "eip155:43113", price = "$0.0
   const rpcUrl = dataRpcUrl || PUBLIC_RPC[network];
   const app = express();
   app.disable("x-powered-by");
+  // Fly sits in front: the client IP is the trusted hop of X-Forwarded-For. Tier A gets 451 (geo.mjs).
+  app.set("trust proxy", 1);
+  app.use(blockTierA());
   app.get("/health", (req, res) => res.json({ ok: true }));
   // The bare URL used to answer "Cannot GET /". It now says what this is and where to go.
   app.get("/", (req, res) => res.json({
