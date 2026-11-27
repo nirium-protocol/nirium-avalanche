@@ -33,7 +33,7 @@ jobs:
       - name: Pre-sign policy (19 tests, no network)
         working-directory: avalanche/policy
         run: npm test
-      - name: SDK (pay, charge, receipts; 8 tests, one reads the public Fuji RPC)
+      - name: SDK (pay, charge, receipts; 9 tests, one reads the public Fuji RPC)
         working-directory: avalanche/sdk
         run: npm test
       - name: x402 market (3 tests, no network)
