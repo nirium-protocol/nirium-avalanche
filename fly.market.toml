@@ -1,0 +1,36 @@
+# Fly app for the avalanche x402 market. Deploy from the repository root:
+#   fly deploy -c fly.market.toml --remote-only
+# The server holds no key: NIRIUM_EVM_PAYTO is the public address that receives each sale.
+app = "nirium-market-avalanche"
+primary_region = "iad"
+
+[build]
+  dockerfile = "avalanche/market/Dockerfile"
+
+[env]
+  PORT = "8080"
+  # Testnet (Fuji) until the mainnet switch. Mainnet needs three changes together:
+  #   NIRIUM_NETWORK = "eip155:43114"
+  #   NIRIUM_EVM_PAYTO = "0xd488453B43Bc09398548a7EC39337e04669F0F51"   (no setup needed on EVM)
+  #   NIRIUM_MARKET_ALLOW_MAINNET = "1"   (each sale is income for Nirium)
+  NIRIUM_NETWORK = "eip155:43113"
+  NIRIUM_EVM_PAYTO = "0x241d8C05f2a33F8701B933B704d329CC88367007"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  # Stops when idle and starts on the first request: near zero cost with no traffic.
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+
+  [[http_service.checks]]
+    grace_period = "10s"
+    interval = "30s"
+    method = "GET"
+    path = "/health"
+    timeout = "5s"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "256mb"
