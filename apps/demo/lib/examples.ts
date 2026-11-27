@@ -19,6 +19,15 @@ export const STORIES = [
     },
   },
   {
+    cid: "QmNjcqmY3xCnHfpvj8KXj9ZhKFEzyrMmXEQ8jNfBkhpZMz",
+    edit: "amount",
+    title: { en: "An edited receipt", es: "Un recibo editado" },
+    text: {
+      en: "The Fuji receipt with its amount changed in this page after it was signed. Watch which links break, and why.",
+      es: "El recibo de Fuji con el monto cambiado en esta página después de firmarse. Mira qué líneas se rompen, y por qué.",
+    },
+  },
+  {
     cid: "QmWMvQ8pcAGs2fojuZvUzxj68VvZfdYYpbR8gqL6j9cCi6",
     title: { en: "A receipt from another network", es: "Un recibo de otra red" },
     text: {
