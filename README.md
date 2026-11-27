@@ -77,7 +77,7 @@ const receipt = await bindReceipt({ tx: settlementOf(res).transaction, network: 
 |---|---|---|
 | Verifier, 10 cases against a real transaction | `cd avalanche && npm ci && bash run-tests.sh` | public C-Chain RPC |
 | Pre-sign policy, 19 tests | `cd avalanche/policy && npm ci && npm test` | none |
-| Library, 8 tests | `cd avalanche/sdk && npm ci && npm test` | one test reads the public Fuji RPC |
+| Library, 9 tests | `cd avalanche/sdk && npm ci && npm test` | one test reads the public Fuji RPC |
 | Market, 3 tests | `cd avalanche/market && npm ci && npm test` | none |
 | ERC-8004 dry run | `cd avalanche/erc8004-fuji && npm ci && node register.mjs --dry-run --from 0x... --uri ipfs://x` | public Fuji RPC, simulation only |
 

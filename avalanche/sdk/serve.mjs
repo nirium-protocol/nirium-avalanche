@@ -14,6 +14,15 @@
 import { isAddress, getAddress } from "viem";
 import { getNetwork, dollarsToAtomic, USDC_EXTRA, PAYAI_FACILITATOR } from "./networks.mjs";
 
+// Linear time. A `/\/+$/` replace is polynomial on input made of many slashes (CodeQL
+// js/polynomial-redos); the URL comes from config, but there is no reason to keep the risk.
+export function trimTrailingSlashes(url) {
+  let s = String(url);
+  let end = s.length;
+  while (end > 0 && s.charCodeAt(end - 1) === 47) end--;
+  return s.slice(0, end);
+}
+
 /**
  * @param {object} config
  * @param {string} config.payTo     address that receives the USDC
@@ -31,7 +40,7 @@ export function x402Serve(config) {
   const network = config.network || "eip155:43113";
   const net = getNetwork(network);
   const payTo = getAddress(config.payTo);
-  const facilitatorUrl = (config.facilitatorUrl || PAYAI_FACILITATOR).replace(/\/+$/, "");
+  const facilitatorUrl = trimTrailingSlashes(config.facilitatorUrl || PAYAI_FACILITATOR);
 
   const routes = {};
   for (const [key, value] of entries) {
