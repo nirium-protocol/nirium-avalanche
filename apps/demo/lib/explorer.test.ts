@@ -30,7 +30,7 @@ test("classify: the network comes from the receipt, and bad input is named", () 
   assert.deepEqual(classify(` ${receipt.record.payment.tx.toUpperCase().replace("0X", "0x")}\n`), { kind: "hash", hash: receipt.record.payment.tx.toLowerCase() });
   assert.deepEqual(classify("{ not json"), { kind: "invalid", reason: "not-json" });
   assert.deepEqual(classify('{"a":1}'), { kind: "invalid", reason: "not-a-receipt" });
-  assert.deepEqual(classify('{"record":{"payment":{"network":"solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1"}}}'), { kind: "invalid", reason: "unknown-network" });
+  assert.deepEqual(classify('{"record":{"payment":{"network":"eip155:1"}}}'), { kind: "invalid", reason: "unknown-network" });
   assert.deepEqual(classify("0x1234"), { kind: "invalid", reason: "unrecognized" });
 });
 
