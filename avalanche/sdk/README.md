@@ -27,6 +27,8 @@ const { ok } = await verifyReceipt(receipt);
 | `createX402Fetch(cfg)` | `fetch` that pays x402 `exact` with a per-payment cap. With `policy`, nothing is signed without the policy's ALLOW (see `../policy/`). Mainnet needs `allowMainnet: true`. |
 | `settlementOf(res)` | The settlement from the `PAYMENT-RESPONSE` header, or `undefined`. |
 | `bindReceipt(o)` | Reads the settled tx (waits for the RPC to have it), finds the USDC `Transfer` from the payer and its EIP-3009 nonce, builds the receipt in canonical order and signs it as the payer. Refuses a signer that is not the payer. |
+| `bindDecision(policyRecord, o)` | A payer-signed receipt of one policy decision (`nirium-decision-v1`, see `../../docs/decision-receipt-v1.md`), built from what the policy passes to `onDecision`. A DENY or WAIT signs no payment, so this receipt is the only record of it. `hashOnly: true` keeps the content private. `collectDecisions()` gives an `onDecision` observer that keeps the records to sign after the attempt. |
+| `verifyDecision(doc, { record })` | Format, hash and payer signature of a decision receipt. Nothing on-chain to check: a refusal leaves nothing there. |
 | `verifyReceipt(doc)` | The chain verifier (`../verify-evm-core.mjs`), the same code the CLI and the browser run. |
 
 The receipt adds what the chain does not keep: who declared the payment and what it was for. It
@@ -35,7 +37,7 @@ does not prove delivery. Format: `../../docs/payment-binding-v1.md`.
 ## Tests
 
 ```bash
-cd .. && npm ci && npm run test:sdk   # 9 tests
+cd .. && npm ci && npm run test:sdk   # 14 tests
 ```
 
 The pay/charge loop runs offline against a local fake facilitator that checks the payer's
