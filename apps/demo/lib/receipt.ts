@@ -1,4 +1,4 @@
-// Runs the same verifier as `npx nirium-verify-evm` (nirium-avalanche/verify, the shared core) on a
+// Runs the same verifier as `npx -p nirium-avalanche nirium-verify-evm` (nirium-avalanche/verify, the shared core) on a
 // receipt the visitor pasted, and sorts the result for the page. Nothing leaves the browser except
 // the RPC calls the verifier makes to the receipt's own network.
 
