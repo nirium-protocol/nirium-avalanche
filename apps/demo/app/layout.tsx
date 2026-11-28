@@ -13,6 +13,23 @@ export const metadata: Metadata = {
   description: "A receipt signed by whoever pays, that anyone can check against Avalanche, in the browser.",
   icons: { icon: "/avalanche/icon.svg" }, // basePath is not added to metadata icons
   robots: { index: false, follow: false },
+  // Link previews (Telegram, X, Slack, WhatsApp). Absolute URLs: basePath is not added to metadata
+  // images, and nirium.xyz rewrites /avalanche/* to this deployment, so /avalanche/og.png is served from public/og.png.
+  metadataBase: new URL("https://nirium.xyz"),
+  openGraph: {
+    type: "website",
+    siteName: "Nirium",
+    url: "https://nirium.xyz/avalanche",
+    title: "Nirium on Avalanche",
+    description: "A receipt signed by whoever pays, that anyone can check against Avalanche, in the browser.",
+    images: [{ url: "https://nirium.xyz/avalanche/og.png", width: 1200, height: 630, alt: "Nirium on Avalanche: a receipt signed by whoever pays, checked against Avalanche in the browser" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Nirium on Avalanche",
+    description: "A receipt signed by whoever pays, that anyone can check against Avalanche, in the browser.",
+    images: ["https://nirium.xyz/avalanche/og.png"],
+  },
 };
 export const viewport: Viewport = { width: "device-width", initialScale: 1 };
 
